@@ -1,0 +1,12 @@
+build/app/
+build/ios/
+build/macos/
+.dart_tool/
+android/
+ios/
+macos/
+.git/
+node_modules/
+**/node_modules/
+.gradle/
+

@@ -22,8 +22,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static assets from the Flutter project
 app.use('/assets', express.static(path.join(__dirname, '..', 'assets')));
+// Serve Flutter Web Customer App
+const FLUTTER_WEB_DIR = path.join(__dirname, '..', 'build', 'web');
+if (fs.existsSync(FLUTTER_WEB_DIR)) {
+  app.use('/app', express.static(FLUTTER_WEB_DIR));
+}
 // Serve admin web UI
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Configure Multer for product image uploads
 const storage = multer.diskStorage({
