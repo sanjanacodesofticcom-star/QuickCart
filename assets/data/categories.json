@@ -1,0 +1,92 @@
+[
+  {
+    "id": "CAT001",
+    "name": "Snacks",
+    "slug": "snacks",
+    "description": "Crispy chips, nachos, and puffs",
+    "image": "assets/images/categories/snacks.png",
+    "isActive": true,
+    "sortOrder": 1
+  },
+  {
+    "id": "CAT002",
+    "name": "Biscuits",
+    "slug": "biscuits",
+    "description": "Crispy, salted, and buttery biscuits",
+    "image": "assets/images/categories/biscuits.png",
+    "isActive": true,
+    "sortOrder": 2
+  },
+  {
+    "id": "CAT003",
+    "name": "Chocolates",
+    "slug": "chocolates",
+    "description": "Rich milk bars, wafers, and caramels",
+    "image": "assets/images/categories/chocolates.png",
+    "isActive": true,
+    "sortOrder": 3
+  },
+  {
+    "id": "CAT004",
+    "name": "Beverages",
+    "slug": "beverages",
+    "description": "Cold soft drinks, iced teas, and juices",
+    "image": "assets/images/categories/beverages.png",
+    "isActive": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "CAT005",
+    "name": "Instant Food",
+    "slug": "instant-food",
+    "description": "Quick pastas, ready-to-eat meals, and mixes",
+    "image": "assets/images/categories/instant_food.png",
+    "isActive": true,
+    "sortOrder": 5
+  },
+  {
+    "id": "CAT006",
+    "name": "Noodles",
+    "slug": "noodles",
+    "description": "Spicy ramen, masala noodles, and soupy delights",
+    "image": "assets/images/categories/noodles.png",
+    "isActive": true,
+    "sortOrder": 6
+  },
+  {
+    "id": "CAT007",
+    "name": "Namkeen",
+    "slug": "namkeen",
+    "description": "Traditional bhujia, sev, mixtures, and nuts",
+    "image": "assets/images/categories/namkeen.png",
+    "isActive": true,
+    "sortOrder": 7
+  },
+  {
+    "id": "CAT008",
+    "name": "Cookies",
+    "slug": "cookies",
+    "description": "Baked chocolate, coconut, and oat cookies",
+    "image": "assets/images/categories/cookies.png",
+    "isActive": true,
+    "sortOrder": 8
+  },
+  {
+    "id": "CAT009",
+    "name": "Breakfast",
+    "slug": "breakfast",
+    "description": "Cereals, muesli, and instant oats",
+    "image": "assets/images/categories/breakfast.png",
+    "isActive": true,
+    "sortOrder": 9
+  },
+  {
+    "id": "CAT010",
+    "name": "Ice Cream",
+    "slug": "ice-cream",
+    "description": "Creamy cones, tubs, and popsicles",
+    "image": "assets/images/categories/ice_cream.png",
+    "isActive": true,
+    "sortOrder": 10
+  }
+]

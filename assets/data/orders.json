@@ -1,0 +1,208 @@
+[
+  {
+    "id": "ORD001",
+    "orderNumber": "#QC1001",
+    "customerId": "CUS001",
+    "customerName": "Rahul Sharma",
+    "phone": "9876543210",
+    "address": {
+      "line1": "Flat 402, Green Valley Apts",
+      "city": "Jalandhar",
+      "state": "Punjab",
+      "pincode": "144001"
+    },
+    "items": [
+      {
+        "productId": "P001",
+        "productName": "Classic Salted Potato Chips",
+        "quantity": 2,
+        "price": 30,
+        "total": 60
+      },
+      {
+        "productId": "P028",
+        "productName": "Cola Soft Drink",
+        "quantity": 1,
+        "price": 40,
+        "total": 40
+      }
+    ],
+    "subtotal": 100,
+    "deliveryFee": 20,
+    "discount": 0,
+    "total": 120,
+    "paymentMethod": "COD",
+    "paymentStatus": "Pending",
+    "orderStatus": "Delivered",
+    "createdAt": "2026-09-29T14:30:00"
+  },
+  {
+    "id": "ORD002",
+    "orderNumber": "#QC1002",
+    "customerId": "CUS002",
+    "customerName": "Priya Patel",
+    "phone": "9812345678",
+    "address": {
+      "line1": "B-12, Sunrise Residency, Urban Estate",
+      "city": "Jalandhar",
+      "state": "Punjab",
+      "pincode": "144002"
+    },
+    "items": [
+      {
+        "productId": "P013",
+        "productName": "Aloo Bhujia Style Namkeen",
+        "quantity": 2,
+        "price": 45,
+        "total": 90
+      },
+      {
+        "productId": "P017",
+        "productName": "Chocolate Cookies",
+        "quantity": 2,
+        "price": 40,
+        "total": 80
+      },
+      {
+        "productId": "P023",
+        "productName": "Instant Masala Noodles",
+        "quantity": 4,
+        "price": 20,
+        "total": 80
+      },
+      {
+        "productId": "P027",
+        "productName": "Mango Fruit Drink",
+        "quantity": 2,
+        "price": 35,
+        "total": 70
+      }
+    ],
+    "subtotal": 320,
+    "deliveryFee": 0,
+    "discount": 0,
+    "total": 320,
+    "paymentMethod": "Online",
+    "paymentStatus": "Paid",
+    "orderStatus": "Out for Delivery",
+    "createdAt": "2026-09-30T10:15:00"
+  },
+  {
+    "id": "ORD003",
+    "orderNumber": "#QC1003",
+    "customerId": "CUS003",
+    "customerName": "Amit Verma",
+    "phone": "9898765432",
+    "address": {
+      "line1": "House 108, Model Town",
+      "city": "Jalandhar",
+      "state": "Punjab",
+      "pincode": "144003"
+    },
+    "items": [
+      {
+        "productId": "P021",
+        "productName": "Milk Chocolate Bar",
+        "quantity": 3,
+        "price": 50,
+        "total": 150
+      },
+      {
+        "productId": "P026",
+        "productName": "Lemon Iced Tea",
+        "quantity": 2,
+        "price": 40,
+        "total": 80
+      }
+    ],
+    "subtotal": 230,
+    "deliveryFee": 20,
+    "discount": 0,
+    "total": 250,
+    "paymentMethod": "Online",
+    "paymentStatus": "Paid",
+    "orderStatus": "Preparing",
+    "createdAt": "2026-09-30T11:45:00"
+  },
+  {
+    "id": "ORD004",
+    "orderNumber": "#QC1004",
+    "customerId": "CUS004",
+    "customerName": "Sneha Reddy",
+    "phone": "9765432109",
+    "address": {
+      "line1": "72-C, Defence Colony",
+      "city": "Jalandhar",
+      "state": "Punjab",
+      "pincode": "144001"
+    },
+    "items": [
+      {
+        "productId": "P006",
+        "productName": "Cheese Nacho Chips",
+        "quantity": 2,
+        "price": 50,
+        "total": 100
+      },
+      {
+        "productId": "P024",
+        "productName": "Hot & Spicy Noodles",
+        "quantity": 2,
+        "price": 50,
+        "total": 100
+      }
+    ],
+    "subtotal": 200,
+    "deliveryFee": 20,
+    "discount": 0,
+    "total": 220,
+    "paymentMethod": "COD",
+    "paymentStatus": "Pending",
+    "orderStatus": "Confirmed",
+    "createdAt": "2026-09-30T12:10:00"
+  },
+  {
+    "id": "ORD005",
+    "orderNumber": "#QC1005",
+    "customerId": "CUS005",
+    "customerName": "Vikram Singh",
+    "phone": "9988776655",
+    "address": {
+      "line1": "Villa 15, Palm Enclave",
+      "city": "Jalandhar",
+      "state": "Punjab",
+      "pincode": "144004"
+    },
+    "items": [
+      {
+        "productId": "P002",
+        "productName": "Masala Potato Chips",
+        "quantity": 3,
+        "price": 30,
+        "total": 90
+      },
+      {
+        "productId": "P010",
+        "productName": "Masala Peanuts",
+        "quantity": 2,
+        "price": 45,
+        "total": 90
+      },
+      {
+        "productId": "P029",
+        "productName": "Orange Soft Drink",
+        "quantity": 2,
+        "price": 35,
+        "total": 70
+      }
+    ],
+    "subtotal": 250,
+    "deliveryFee": 20,
+    "discount": 0,
+    "total": 270,
+    "paymentMethod": "COD",
+    "paymentStatus": "Pending",
+    "orderStatus": "Placed",
+    "createdAt": "2026-09-30T12:30:00"
+  }
+]

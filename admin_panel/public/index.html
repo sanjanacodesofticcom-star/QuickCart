@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickCart Web Admin — Store & Inventory Management Hub</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23FFD600'><path d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/></svg>">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-badge">⚡</div>
+        <div class="brand-text">
+          <h2>QuickCart</h2>
+          <span>Admin Portal</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-label">Management</div>
+        <a class="nav-item active" data-view="dashboard">
+          <i class="fa-solid fa-chart-pie icon"></i>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-view="products">
+          <i class="fa-solid fa-boxes-stacked icon"></i>
+          <span>Products Catalog</span>
+          <span class="badge" id="sidebarProductCount">0</span>
+        </a>
+        <a class="nav-item" data-view="inventory">
+          <i class="fa-solid fa-warehouse icon"></i>
+          <span>Inventory & Stock</span>
+          <span class="badge" id="sidebarLowStockBadge" style="display: none;">0</span>
+        </a>
+        <a class="nav-item" data-view="categories">
+          <i class="fa-solid fa-tags icon"></i>
+          <span>Categories</span>
+        </a>
+
+        <div class="nav-label" style="margin-top: 10px;">Store Operations</div>
+        <a class="nav-item" data-view="orders">
+          <i class="fa-solid fa-receipt icon"></i>
+          <span>Live Orders</span>
+          <span class="badge" id="sidebarOrderCount">0</span>
+        </a>
+        <a class="nav-item" data-view="customers">
+          <i class="fa-solid fa-users icon"></i>
+          <span>Customers</span>
+        </a>
+        <a class="nav-item" data-view="settings">
+          <i class="fa-solid fa-gear icon"></i>
+          <span>Store Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sync-dot"></div>
+        <div class="sync-info">
+          <strong>JSON Database Synced</strong>
+          <span>Localhost Live Sync</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-area">
+      <!-- Top Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <div class="page-title">
+            <h1 id="viewTitle">Dashboard Overview</h1>
+            <span id="viewSubtitle">Real-time metrics, inventory health & quick actions</span>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="globalSearchInput" placeholder="Search products, SKU, tags...">
+          </div>
+
+          <button class="btn btn-primary" id="openAddProductBtn">
+            <i class="fa-solid fa-plus"></i>
+            <span>Add Product</span>
+          </button>
+
+          <button class="btn btn-outline" id="quickRestockAllBtn" title="Bulk Stock Restock">
+            <i class="fa-solid fa-truck-ramp-box"></i>
+            <span>Restock Low</span>
+          </button>
+
+          <button class="btn btn-icon" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Dynamic Views Container -->
+      <div class="content-body" id="contentBody">
+        <!-- 1. DASHBOARD VIEW -->
+        <section class="view-section" id="view-dashboard">
+          <!-- Stats Grid -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Total Products</span>
+                <div class="stat-icon icon-yellow"><i class="fa-solid fa-box-open"></i></div>
+              </div>
+              <div class="stat-value" id="statTotalProducts">0</div>
+              <div class="stat-footer">
+                <span class="badge-pill badge-in-stock" id="statActiveProducts">0 Active</span>
+                <span>in catalog</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Low Stock Alert</span>
+                <div class="stat-icon icon-orange"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              </div>
+              <div class="stat-value" id="statLowStock">0</div>
+              <div class="stat-footer">
+                <span style="color: var(--accent-orange);">Requires reorder &le; 10 units</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Out of Stock</span>
+                <div class="stat-icon icon-red"><i class="fa-solid fa-circle-xmark"></i></div>
+              </div>
+              <div class="stat-value" id="statOutOfStock">0</div>
+              <div class="stat-footer">
+                <span style="color: var(--accent-red);">0 units remaining</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Total Inventory Value</span>
+                <div class="stat-icon icon-green"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+              </div>
+              <div class="stat-value" id="statInventoryValue">₹0</div>
+              <div class="stat-footer">
+                <span>Warehouse asset value</span>
+              </div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-header">
+                <span class="stat-title">Total Revenue</span>
+                <div class="stat-icon icon-blue"><i class="fa-solid fa-wallet"></i></div>
+              </div>
+              <div class="stat-value" id="statTotalRevenue">₹0</div>
+              <div class="stat-footer">
+                <span id="statOrderCount">0 Orders</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions & Reorder Table -->
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+            <!-- Low Stock Urgent Action Panel -->
+            <div class="panel-card">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <h3>⚠️ Urgent Stock Restock List</h3>
+                  <p>Items with critically low inventory that need immediate replenishment</p>
+                </div>
+                <button class="btn btn-outline btn-sm" onclick="app.switchView('inventory')">View All Inventory</button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table" id="dashboardLowStockTable">
+                  <thead>
+                    <tr>
+                      <th>Product</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Stock Status</th>
+                      <th>Quick Restock</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Injected via JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Categories Breakdown Panel -->
+            <div class="panel-card">
+              <div class="panel-header">
+                <div class="panel-title">
+                  <h3>🏷️ Category Distribution</h3>
+                  <p>Product density across departments</p>
+                </div>
+              </div>
+              <div style="padding: 16px; display: flex; flex-direction: column; gap: 12px;" id="dashboardCategoryList">
+                <!-- Injected via JS -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. PRODUCTS CATALOG VIEW -->
+        <section class="view-section" id="view-products" style="display: none;">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="filter-bar">
+                <select class="filter-select" id="productCategoryFilter">
+                  <option value="all">All Categories</option>
+                  <!-- Injected via JS -->
+                </select>
+
+                <div class="tab-pill active" data-filter="all">All Products</div>
+                <div class="tab-pill" data-filter="in_stock">In Stock</div>
+                <div class="tab-pill" data-filter="low_stock">Low Stock</div>
+                <div class="tab-pill" data-filter="out_of_stock">Out of Stock</div>
+                <div class="tab-pill" data-filter="inactive">Inactive</div>
+
+                <select class="filter-select" id="productSortSelect">
+                  <option value="">Sort By...</option>
+                  <option value="price_asc">Price: Low to High</option>
+                  <option value="price_desc">Price: High to Low</option>
+                  <option value="stock_asc">Stock: Low to High</option>
+                  <option value="stock_desc">Stock: High to Low</option>
+                  <option value="name_asc">Name: A to Z</option>
+                </select>
+              </div>
+
+              <div style="display: flex; gap: 8px;">
+                <button class="btn btn-icon" id="toggleViewModeBtn" title="Toggle Grid/Table View">
+                  <i class="fa-solid fa-table-cells-large"></i>
+                </button>
+                <button class="btn btn-primary" onclick="app.openProductModal()">
+                  <i class="fa-solid fa-plus"></i> Add Product
+                </button>
+              </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="table-responsive" id="productsTableContainer">
+              <table class="data-table" id="productsTable">
+                <thead>
+                  <tr>
+                    <th>Product & SKU</th>
+                    <th>Category</th>
+                    <th>Price & MRP</th>
+                    <th>Weight/Unit</th>
+                    <th>Current Stock</th>
+                    <th>Active</th>
+                    <th>Badges</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Products Grid Cards View (Hidden by default) -->
+            <div class="products-grid-view" id="productsGridContainer" style="display: none;">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 3. INVENTORY & STOCK VIEW -->
+        <section class="view-section" id="view-inventory" style="display: none;">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h3>🏬 Warehouse Inventory & Stock Levels</h3>
+                <p>Adjust quantities, configure low-stock triggers, and restock batches</p>
+              </div>
+
+              <div style="display: flex; gap: 10px;">
+                <button class="btn btn-primary" onclick="app.bulkRestockLowStock()">
+                  <i class="fa-solid fa-bolt"></i> Batch Restock Low Items (+15)
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>SKU & Item</th>
+                    <th>Category</th>
+                    <th>Unit Cost / Value</th>
+                    <th>Stock Health</th>
+                    <th>Quick Stock Adjuster</th>
+                    <th>Total Item Value</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="inventoryTableBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. CATEGORIES VIEW -->
+        <section class="view-section" id="view-categories" style="display: none;">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h3>🏷️ Store Product Categories</h3>
+                <p>Manage product departments, slug URLs and active state</p>
+              </div>
+              <button class="btn btn-primary" onclick="app.openCategoryModal()">
+                <i class="fa-solid fa-plus"></i> Add Category
+              </button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; padding: 20px;" id="categoriesGrid">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. ORDERS VIEW -->
+        <section class="view-section" id="view-orders" style="display: none;">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h3>🧾 Customer Orders & Dispatch Tracker</h3>
+                <p>Review customer orders, update delivery milestones, and track revenue</p>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Total Amount</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                  </tr>
+                </thead>
+                <tbody id="ordersTableBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. CUSTOMERS VIEW -->
+        <section class="view-section" id="view-customers" style="display: none;">
+          <div class="panel-card">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h3>👥 Registered Customer Profiles</h3>
+                <p>Customer accounts, delivery addresses, and lifetime purchases</p>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Email Address</th>
+                    <th>Phone</th>
+                    <th>Saved Addresses</th>
+                    <th>Orders Placed</th>
+                    <th>Total Spent</th>
+                  </tr>
+                </thead>
+                <tbody id="customersTableBody">
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7. SETTINGS VIEW -->
+        <section class="view-section" id="view-settings" style="display: none;">
+          <div class="panel-card" style="max-width: 700px;">
+            <div class="panel-header">
+              <div class="panel-title">
+                <h3>⚙️ Quick Commerce Store Settings</h3>
+                <p>Configure delivery SLAs, handling fees, and operational parameters</p>
+              </div>
+            </div>
+            <div style="padding: 24px; display: flex; flex-direction: column; gap: 18px;">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Store Name</label>
+                  <input type="text" id="settingStoreName" value="QuickCart Supermarket">
+                </div>
+                <div class="form-group">
+                  <label>Delivery Promise (Minutes)</label>
+                  <input type="number" id="settingDeliveryMins" value="10">
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Delivery Fee (₹)</label>
+                  <input type="number" id="settingDeliveryFee" value="15">
+                </div>
+                <div class="form-group">
+                  <label>Free Delivery Above (₹)</label>
+                  <input type="number" id="settingFreeDeliveryThreshold" value="199">
+                </div>
+              </div>
+
+              <div class="checkbox-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="settingStoreOpen" checked>
+                  <span>Store Accepting Live Customer Orders</span>
+                </label>
+              </div>
+
+              <button class="btn btn-primary" style="align-self: flex-start;" onclick="app.saveSettings()">
+                Save Store Settings
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- ADD / EDIT PRODUCT MODAL -->
+  <div class="modal-overlay" id="productModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="productModalTitle">Add New Product</h3>
+        <button class="btn btn-icon" onclick="app.closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <form id="productForm" onsubmit="app.handleProductFormSubmit(event)">
+        <input type="hidden" id="prodEditId">
+
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Product Name *</label>
+              <input type="text" id="prodName" required placeholder="e.g. Kurkure Masala Munch">
+            </div>
+            <div class="form-group">
+              <label>SKU (Stock Keeping Unit)</label>
+              <input type="text" id="prodSku" placeholder="Auto-generated if empty e.g. SNK-015">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Category *</label>
+              <select id="prodCategoryId" required>
+                <!-- Injected via JS -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Unit / Weight *</label>
+              <input type="text" id="prodWeight" required placeholder="e.g. 52 g, 1 pack, 500 ml">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Selling Price (₹) *</label>
+              <input type="number" id="prodPrice" step="0.5" required placeholder="e.g. 20" oninput="app.calculateDiscount()">
+            </div>
+            <div class="form-group">
+              <label>Compare at Price / MRP (₹)</label>
+              <input type="number" id="prodCompareAtPrice" step="0.5" placeholder="e.g. 25" oninput="app.calculateDiscount()">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Initial Stock Quantity *</label>
+              <input type="number" id="prodStock" required value="50" min="0">
+            </div>
+            <div class="form-group">
+              <label>Low Stock Warning Threshold</label>
+              <input type="number" id="prodLowStockThreshold" value="10" min="1">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Image Asset / URL</label>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" id="prodImage" placeholder="assets/images/products/P001.png or web URL" style="flex: 1;">
+              <input type="file" id="prodImageUpload" accept="image/*" style="display: none;" onchange="app.handleImageUpload(event)">
+              <button type="button" class="btn btn-outline" onclick="document.getElementById('prodImageUpload').click()">
+                <i class="fa-solid fa-upload"></i> Upload
+              </button>
+            </div>
+            <div id="imageUploadStatus" style="font-size: 11px; color: var(--accent-green); display: none;">Image uploaded!</div>
+          </div>
+
+          <div class="form-group">
+            <label>Short Description</label>
+            <input type="text" id="prodShortDesc" placeholder="Brief 1-line punchy description">
+          </div>
+
+          <div class="form-group">
+            <label>Tags (comma-separated)</label>
+            <input type="text" id="prodTags" placeholder="snacks, crunchy, bestseller, spicy">
+          </div>
+
+          <div class="checkbox-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="prodIsActive" checked>
+              <span>Active in Customer App</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="prodIsFeatured">
+              <span>Featured ⭐</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="prodIsBestSeller">
+              <span>Bestseller 🔥</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="app.closeProductModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="saveProductBtn">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADD CATEGORY MODAL -->
+  <div class="modal-overlay" id="categoryModal">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3>Add New Category</h3>
+        <button class="btn btn-icon" onclick="app.closeCategoryModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form onsubmit="app.handleCategorySubmit(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Category Name *</label>
+            <input type="text" id="catName" required placeholder="e.g. Dairy & Eggs">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <input type="text" id="catDesc" placeholder="Fresh milk, butter, cheese, and eggs">
+          </div>
+          <div class="form-group">
+            <label>Image Asset / Path</label>
+            <input type="text" id="catImage" value="assets/images/categories/general.png">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="app.closeCategoryModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notifications Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "appName": "QuickCart",
+  "tagline": "Groceries in 10 minutes",
+  "currency": "INR",
+  "currencySymbol": "₹",
+  "deliveryFee": 20,
+  "freeDeliveryThreshold": 299,
+  "estimatedDeliveryMinutes": 10,
+  "supportPhone": "+91 98765 43210",
+  "supportEmail": "support@quickcart.app",
+  "adminCredentials": {
+    "email": "admin@quickcart.app",
+    "password": "admin"
+  }
+}

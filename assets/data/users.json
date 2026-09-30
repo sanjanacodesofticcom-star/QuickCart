@@ -1,0 +1,101 @@
+[
+  {
+    "id": "CUS001",
+    "name": "Rahul Sharma",
+    "email": "rahul.sharma@example.com",
+    "phone": "9876543210",
+    "avatar": "assets/images/users/avatar1.png",
+    "addresses": [
+      {
+        "id": "ADDR001",
+        "title": "Home",
+        "line1": "Flat 402, Green Valley Apts",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144001",
+        "isDefault": true
+      },
+      {
+        "id": "ADDR002",
+        "title": "Work",
+        "line1": "Tech Park, GT Road",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144005",
+        "isDefault": false
+      }
+    ]
+  },
+  {
+    "id": "CUS002",
+    "name": "Priya Patel",
+    "email": "priya.patel@example.com",
+    "phone": "9812345678",
+    "avatar": "assets/images/users/avatar2.png",
+    "addresses": [
+      {
+        "id": "ADDR003",
+        "title": "Home",
+        "line1": "B-12, Sunrise Residency, Urban Estate",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144002",
+        "isDefault": true
+      }
+    ]
+  },
+  {
+    "id": "CUS003",
+    "name": "Amit Verma",
+    "email": "amit.verma@example.com",
+    "phone": "9898765432",
+    "avatar": "assets/images/users/avatar3.png",
+    "addresses": [
+      {
+        "id": "ADDR004",
+        "title": "Home",
+        "line1": "House 108, Model Town",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144003",
+        "isDefault": true
+      }
+    ]
+  },
+  {
+    "id": "CUS004",
+    "name": "Sneha Reddy",
+    "email": "sneha.reddy@example.com",
+    "phone": "9765432109",
+    "avatar": "assets/images/users/avatar4.png",
+    "addresses": [
+      {
+        "id": "ADDR005",
+        "title": "Home",
+        "line1": "72-C, Defence Colony",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144001",
+        "isDefault": true
+      }
+    ]
+  },
+  {
+    "id": "CUS005",
+    "name": "Vikram Singh",
+    "email": "vikram.singh@example.com",
+    "phone": "9988776655",
+    "avatar": "assets/images/users/avatar5.png",
+    "addresses": [
+      {
+        "id": "ADDR006",
+        "title": "Home",
+        "line1": "Villa 15, Palm Enclave",
+        "city": "Jalandhar",
+        "state": "Punjab",
+        "pincode": "144004",
+        "isDefault": true
+      }
+    ]
+  }
+]
