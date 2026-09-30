@@ -5,7 +5,8 @@ const path = require('path');
 const multer = require('multer');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
+
 
 // Paths to workspace data
 const DATA_DIR = path.join(__dirname, '..', 'assets', 'data');
@@ -517,15 +518,17 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
   });
 });
 
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`====================================================`);
     console.log(`🚀 QuickCart Web Admin Server is running on:`);
     console.log(`   👉 Localhost: http://localhost:${PORT}`);
     console.log(`   👉 Dashboard: http://localhost:${PORT}/index.html`);
+    console.log(`   👉 Customer App: http://localhost:${PORT}/app/`);
     console.log(`====================================================`);
   });
 }
 
 module.exports = app;
+
 
